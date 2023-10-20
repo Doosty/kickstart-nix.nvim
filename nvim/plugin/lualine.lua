@@ -1,6 +1,3 @@
-local navic = require('nvim-navic')
-navic.setup()
-
 ---Indicators for special modes,
 ---@return string status
 local function extra_mode_status()
@@ -22,12 +19,22 @@ local function extra_mode_status()
   return ''
 end
 
+-- +-------------------------------------------------+
+-- | A | B | C                             X | Y | Z |
+-- +-------------------------------------------------+
+-- https://github.com/nvim-lualine/lualine.nvim
 require('lualine').setup {
   globalstatus = true,
+  options = {
+    theme = 'auto',
+  },
   sections = {
-    lualine_c = {
-      -- nvim-navic
-      { navic.get_location, cond = navic.is_available },
+    lualine_c = {},
+    lualine_x = {
+      {'progress'},
+    },
+    lualine_y = {
+      {'location'},
     },
     lualine_z = {
       -- (see above)
@@ -35,47 +42,47 @@ require('lualine').setup {
     },
   },
   options = {
-    theme = 'auto',
+    theme = 'auto', -- dracula-nvim
   },
   tabline = {
-    lualine_a = {
-      {
-        'tabs',
-        mode = 1,
-      },
-    },
-    lualine_b = {
-      {
-        'buffers',
-        show_filename_only = true,
-        show_bufnr = true,
-        mode = 4,
-        filetype_names = {
-          TelescopePrompt = 'Telescope',
-          dashboard = 'Dashboard',
-          fzf = 'FZF',
-        },
-        buffers_color = {
-          -- Same values as the general color option can be used here.
-          active = 'lualine_b_normal', -- Color for active buffer.
-          inactive = 'lualine_b_inactive', -- Color for inactive buffer.
-        },
-      },
-    },
-    lualine_c = {},
-    lualine_x = {},
-    lualine_y = {},
-    lualine_z = {},
+  --  lualine_a = {
+  --    {
+  --     'tabs',
+  --      mode = 2,
+  --    },
+  --  },
+  --  lualine_b = {
+  --    {
+  --      'buffers',
+  --      show_filename_only = true,
+  --      show_bufnr = true,
+  --      mode = 4,
+  --      filetype_names = {
+  --        TelescopePrompt = 'Telescope',
+  --        dashboard = 'Dashboard',
+  --        fzf = 'FZF',
+  --      },
+  --      buffers_color = {
+  --        -- Same values as the general color option can be used here.
+  --        active = 'lualine_b_normal', -- Color for active buffer.
+  --        inactive = 'lualine_b_inactive', -- Color for inactive buffer.
+  --      },
+  --    },
+  --  },
+  --  lualine_c = {},
+  --  lualine_x = {},
+  --  lualine_y = {},
+  --  lualine_z = {},
   },
   winbar = {
-    lualine_z = {
-      {
-        'filename',
-        path = 1,
-        file_status = true,
-        newfile_status = true,
-      },
-    },
+--    lualine_z = {
+--      {
+--        'filename',
+--        path = 1,
+--        file_status = true,
+--        newfile_status = true,
+--      },
+--    },
   },
-  extenstions = { 'fugitive', 'fzf', 'toggleterm', 'quickfix' },
+  extensions = { 'fugitive', 'fzf', 'toggleterm', 'quickfix' },
 }

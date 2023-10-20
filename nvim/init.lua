@@ -3,6 +3,14 @@ local fn = vim.fn
 local opt = vim.o
 local g = vim.g
 
+-- disable netrw
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
+
+-- Leader key
+g.mapleader = ' '
+g.maplocalleader = ' '
+
 cmd.syntax('on')
 cmd.syntax('enable')
 opt.compatible = false
@@ -105,3 +113,11 @@ cmd.packadd('cfilter') -- Allows filtering the quickfix list with :cfdo
 
 -- let sqlite.lua (which some plugins depend on) know where to find sqlite
 vim.g.sqlite_clib_path = require('luv').os_getenv('LIBSQLITE')
+
+-- Color scheme
+--cmd.colorscheme('onedark')
+cmd.colorscheme('catppuccin')
+--cmd.colorscheme('dracula')
+
+--local dap, dapui = require("dap"), require("dapui")
+--dapui.setup()

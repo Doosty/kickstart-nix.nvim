@@ -144,6 +144,7 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' },
     { name = 'cmdline_history' },
     { name = 'path' },
+    { name = 'luasnip' },
   },
 })
 

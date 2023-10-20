@@ -82,6 +82,13 @@ vim.keymap.set('n', '<leader>tq', builtin.command_history, { desc = '[telescope]
 vim.keymap.set('n', '<leader>tl', builtin.loclist, { desc = '[telescope] loclist' })
 vim.keymap.set('n', '<leader>tr', builtin.registers, { desc = '[telescope] registers' })
 vim.keymap.set('n', '<leader>tbb', builtin.buffers, { desc = '[telescope] buffers' })
+-- open file_browser with the path of the current buffer
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>fb",
+  ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+  { noremap = true }
+)
 vim.keymap.set(
   'n',
   '<leader>tbf',
@@ -149,4 +156,6 @@ telescope.setup {
 }
 
 telescope.load_extension('fzy_native')
+telescope.load_extension('file_browser')
+telescope.load_extension('dap')
 -- telescope.load_extension('smart_history')
