@@ -31,7 +31,7 @@ require('lualine').setup {
   sections = {
     lualine_c = {},
     lualine_x = {
-      {'progress'},
+      -- {'progress'},
     },
     lualine_y = {
       {'location'},

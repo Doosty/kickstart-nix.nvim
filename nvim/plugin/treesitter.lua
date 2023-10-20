@@ -84,5 +84,5 @@ require('treesitter-context').setup {
 }
 
 -- Tree-sitter based folding
--- vim.opt.foldmethod = 'expr'
+vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'

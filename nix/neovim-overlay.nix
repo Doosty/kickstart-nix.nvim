@@ -78,6 +78,8 @@ with final.pkgs.lib; let
     toggleterm-nvim # Terminals inside nvim
     indent-blankline-nvim # Indentation visual helper
     nvim-navbuddy # LSP navigation over symbols
+    nvim-ufo
+    promise-async
     # ^ Useful utilities
 
     # Debugging
@@ -123,6 +125,7 @@ with final.pkgs.lib; let
       python-lsp-ruff
       pylsp-rope
       debugpy
+      django-stubs
     ];
 
   extraPackages = with pkgs; [
