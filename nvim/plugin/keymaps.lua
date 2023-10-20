@@ -115,6 +115,11 @@ keymap.set('n', '<leader>h-', function()
   api.nvim_win_set_height(0, toIntegral(curWinHeight * 2 / 3))
 end, { silent = true, desc = 'dec window height' })
 
+-- Close floating windows
+keymap.set('n', '<leader>fq', function()
+  vim.cmd('fclose!')
+end, { silent = true, desc = 'close all floating windows' })
+
 -- Remap Esc to switch to normal mode and Ctrl-Esc to pass Esc to terminal
 keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'switch to normal mode' })
 keymap.set('t', '<C-Esc>', '<Esc>', { desc = 'send Esc to terminal' })
@@ -135,7 +140,7 @@ local severity = diagnostic.severity
 
 keymap.set('n', '<space>e', function()
   local _, winid = diagnostic.open_float(nil, { scope = 'line' })
-  vim.api.nvim_win_set_config(winid or 0, { focusable = true })
+  vim.api.nvim_win_set_config(winid or 0, { focusable = true, relative='win', width=50, height=20, bufpos={10,10}})
 end, { noremap = true, silent = true, desc = 'diagnostics floating window' })
 keymap.set('n', '[d', diagnostic.goto_prev, { noremap = true, silent = true, desc = 'previous diagnostic' })
 keymap.set('n', ']d', diagnostic.goto_next, { noremap = true, silent = true, desc = 'next diagnostic' })
@@ -181,5 +186,12 @@ keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'move down half-page and center' })
 keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'move up half-page and center' })
 keymap.set('n', '<C-f>', '<C-f>zz', { desc = 'move down full-page and center' })
 keymap.set('n', '<C-b>', '<C-b>zz', { desc = 'move up full-page and center' })
+
+-- Alejandra (nix formatter)
+vim.keymap.set('n', '<M-2>', '<Cmd>%!alejandra -qq<CR>')
+-- SSH copy
+vim.keymap.set('n', '<leader>y', '<Plug>OSCYankOperator')
+vim.keymap.set('n', '<leader>yy', '<leader>y_', {noremap = true})
+vim.keymap.set('v', '<leader>y', '<Plug>OSCYankVisual<CR>')
 
 return M

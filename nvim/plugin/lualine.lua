@@ -1,6 +1,3 @@
-local navic = require('nvim-navic')
-navic.setup()
-
 ---Indicators for special modes,
 ---@return string status
 local function extra_mode_status()
@@ -22,12 +19,22 @@ local function extra_mode_status()
   return ''
 end
 
+-- +-------------------------------------------------+
+-- | A | B | C                             X | Y | Z |
+-- +-------------------------------------------------+
+-- https://github.com/nvim-lualine/lualine.nvim
 require('lualine').setup {
   globalstatus = true,
+  options = {
+    theme = 'auto',
+  },
   sections = {
-    lualine_c = {
-      -- nvim-navic
-      { navic.get_location, cond = navic.is_available },
+    lualine_c = {},
+    lualine_x = {
+      {'progress'},
+    },
+    lualine_y = {
+      {'location'},
     },
     lualine_z = {
       -- (see above)
@@ -35,7 +42,7 @@ require('lualine').setup {
     },
   },
   options = {
-    theme = 'auto',
+    theme = 'auto', -- dracula-nvim
   },
   tabline = {
   --  lualine_a = {
@@ -77,5 +84,5 @@ require('lualine').setup {
 --      },
 --    },
   },
-  extenstions = { 'fugitive', 'fzf', 'toggleterm', 'quickfix' },
+  extensions = { 'fugitive', 'fzf', 'toggleterm', 'quickfix' },
 }

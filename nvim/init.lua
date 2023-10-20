@@ -7,6 +7,10 @@ local g = vim.g
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
 
+-- Leader key
+g.mapleader = ' '
+g.maplocalleader = ' '
+
 cmd.syntax('on')
 cmd.syntax('enable')
 opt.compatible = false
@@ -110,18 +114,10 @@ cmd.packadd('cfilter') -- Allows filtering the quickfix list with :cfdo
 -- let sqlite.lua (which some plugins depend on) know where to find sqlite
 vim.g.sqlite_clib_path = require('luv').os_getenv('LIBSQLITE')
 
--- ####### QUICK Plugin configs ##########
--- Barbar (tab bar)
-g.barbar_auto_setup = true
--- Onedark (color theme)
-cmd.colorscheme('onedark')
--- Neotree (file explorer)
-vim.keymap.set('n', '<M-1>', '<Cmd>Neotree toggle<CR>')
--- Alejandra (nix formatter)
-vim.keymap.set('n', '<M-2>', '<Cmd>%!alejandra -qq<CR>')
--- SSH copy
-vim.keymap.set('n', '<leader>y', '<Plug>OSCYankOperator')
-vim.keymap.set('n', '<leader>yy', '<leader>y_', {remap = true})
-vim.keymap.set('v', '<leader>y', '<Plug>OSCYankVisual')
+-- Color scheme
+--cmd.colorscheme('onedark')
+cmd.colorscheme('catppuccin')
+--cmd.colorscheme('dracula')
 
-
+--local dap, dapui = require("dap"), require("dapui")
+--dapui.setup()
