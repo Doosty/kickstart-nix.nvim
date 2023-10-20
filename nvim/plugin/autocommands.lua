@@ -13,27 +13,26 @@ api.nvim_create_autocmd('BufWritePre', {
 -- Toggle between relative/absolute line numbers
 -- Show relative line numbers in the current buffer,
 -- absolute line numbers in inactive buffers
-
---local numbertoggle = api.nvim_create_augroup('numbertoggle', { clear = true })
---api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
---  pattern = '*',
---  group = numbertoggle,
---  callback = function()
---    if vim.o.nu and vim.api.nvim_get_mode().mode ~= 'i' then
---      vim.opt.relativenumber = true
---    end
---  end,
---})
---api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEnter', 'WinLeave' }, {
---  pattern = '*',
---  group = numbertoggle,
---  callback = function()
---    if vim.o.nu then
---      vim.opt.relativenumber = false
---      vim.cmd.redraw()
---    end
---  end,
---})
+local numbertoggle = api.nvim_create_augroup('numbertoggle', { clear = true })
+api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
+  pattern = '*',
+  group = numbertoggle,
+  callback = function()
+    if vim.o.nu and vim.api.nvim_get_mode().mode ~= 'i' then
+      vim.opt.relativenumber = true
+    end
+  end,
+})
+api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEnter', 'WinLeave' }, {
+  pattern = '*',
+  group = numbertoggle,
+  callback = function()
+    if vim.o.nu then
+      vim.opt.relativenumber = false
+      vim.cmd.redraw()
+    end
+  end,
+})
 
 -- Disable spell checking in terminal buffers
 local nospell_group = api.nvim_create_augroup('nospell', { clear = true })
@@ -83,7 +82,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
     -- Attach plugins
-    --require('nvim-navic').attach(client, bufnr)
+    require('nvim-navic').attach(client, bufnr)
 
     vim.cmd.setlocal('signcolumn=yes')
     vim.bo[bufnr].bufhidden = 'hide'
@@ -143,30 +142,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
-
---- Auto-open Neotree
---vim.api.nvim_create_augroup("neotree_autoopen", { clear = true })
---vim.api.nvim_create_autocmd("BufWinEnter", {
---  desc = "Open neo-tree on enter",
---  group = "neotree_autoopen",
---  once = true,
---  callback = function()
---    if not vim.g.neotree_opened then
---      vim.cmd "Neotree show"
---      vim.g.neotree_opened = true
---    end
---  end,
---})
-
-
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  group = highlight_group,
-  pattern = '*',
-})
-
