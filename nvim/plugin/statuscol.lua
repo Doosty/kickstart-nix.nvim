@@ -1,3 +1,4 @@
+-- Column to the left side of your text, used for folding, breakpoints, etc
 local builtin = require('statuscol.builtin')
 require('statuscol').setup {
   setopt = true,

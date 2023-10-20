@@ -38,11 +38,8 @@ require('lualine').setup {
     },
     lualine_z = {
       -- (see above)
-      { extra_mode_status },
+      -- { extra_mode_status },
     },
-  },
-  options = {
-    theme = 'auto', -- dracula-nvim
   },
   tabline = {
   --  lualine_a = {

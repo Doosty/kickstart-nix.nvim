@@ -15,10 +15,12 @@ neogit.setup {
     },
   },
 }
-vim.keymap.set('n', '<leader>go', neogit.open, { noremap = true, silent = true, desc = '[neogit] open' })
-vim.keymap.set('n', '<leader>gs', function()
+vim.keymap.set('n', '<leader>gno', neogit.open, { noremap = true, silent = true, desc = '[neogit] open' })
+
+vim.keymap.set('n', '<leader>gns', function()
   neogit.open { kind = 'auto' }
 end, { noremap = true, silent = true, desc = '[neogit] open (split)' })
-vim.keymap.set('n', '<leader>gc', function()
+
+vim.keymap.set('n', '<leader>gnc', function()
   neogit.open { 'commit' }
 end, { noremap = true, silent = true, desc = '[neogit] commit' })

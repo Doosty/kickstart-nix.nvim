@@ -6,12 +6,12 @@ local keymap = vim.keymap
 local diagnostic = vim.diagnostic
 
 -- Automatic management of search highlight
-local auto_hlsearch_namespace = vim.api.nvim_create_namespace('auto_hlsearch')
-vim.on_key(function(char)
-  if vim.fn.mode() == 'n' then
-    vim.opt.hlsearch = vim.tbl_contains({ '<CR>', 'n', 'N', '*', '#', '?', '/' }, vim.fn.keytrans(char))
-  end
-end, auto_hlsearch_namespace)
+-- local auto_hlsearch_namespace = vim.api.nvim_create_namespace('auto_hlsearch')
+-- vim.on_key(function(char)
+--   if vim.fn.mode() == 'n' then
+--     vim.opt.hlsearch = vim.tbl_contains({ '<CR>', 'n', 'N', '*', '#', '?', '/' }, vim.fn.keytrans(char))
+--   end
+-- end, auto_hlsearch_namespace)
 
 -- Yank from current position till end of current line
 keymap.set('n', 'Y', 'y$', { silent = true, desc = 'yank to end of line' })
@@ -138,12 +138,17 @@ keymap.set('n', '<space>tq', vim.cmd.tabclose, { desc = 'close tab' })
 
 local severity = diagnostic.severity
 
-keymap.set('n', '<space>e', function()
-  local _, winid = diagnostic.open_float(nil, { scope = 'line' })
-  vim.api.nvim_win_set_config(winid or 0, { focusable = true, relative='win', width=50, height=20, bufpos={10,10}})
-end, { noremap = true, silent = true, desc = 'diagnostics floating window' })
+-- keymap.set('n', '<space>e', function()
+--   local _, winid = diagnostic.open_float(nil, { scope = 'line' })
+--   vim.api.nvim_win_set_config(winid or 0, { focusable = true, relative='win', width=50, height=20, bufpos={10,10}})
+-- end, { noremap = true, silent = true, desc = 'diagnostics floating window' })
+
+
+keymap.set('n', '<leader>e', diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+keymap.set('n', '<leader>q', diagnostic.setloclist, { desc = 'Open diagnostics list' })
 keymap.set('n', '[d', diagnostic.goto_prev, { noremap = true, silent = true, desc = 'previous diagnostic' })
 keymap.set('n', ']d', diagnostic.goto_next, { noremap = true, silent = true, desc = 'next diagnostic' })
+
 keymap.set('n', '[e', function()
   diagnostic.goto_prev {
     severity = severity.ERROR,

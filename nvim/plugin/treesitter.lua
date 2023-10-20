@@ -1,7 +1,6 @@
+-- Treesitter - highlight, edit, and navigate code
 local configs = require('nvim-treesitter.configs')
 configs.setup {
-  -- ensure_installed = 'all',
-  -- auto_install = false, -- Do not automatically install missing parsers when entering buffer
   highlight = {
     enable = true,
     disable = function(_, buf)
@@ -15,7 +14,6 @@ configs.setup {
   textobjects = {
     select = {
       enable = true,
-      -- Automatically jump forward to textobject, similar to targets.vim
       lookahead = true,
       keymaps = {
         ['af'] = '@function.outer',

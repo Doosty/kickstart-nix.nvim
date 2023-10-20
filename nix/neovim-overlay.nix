@@ -23,6 +23,7 @@ with final.pkgs.lib; let
     nvim-cmp # https://github.com/hrsh7th/nvim-cmp
     cmp_luasnip # snippets autocompletion extension for nvim-cmp | https://github.com/saadparwaiz1/cmp_luasnip/
     lspkind-nvim # vscode-like LSP pictograms | https://github.com/onsails/lspkind.nvim/
+    friendly-snippets # https://github.com/rafamadriz/friendly-snippets/
     cmp-nvim-lsp # LSP as completion source | https://github.com/hrsh7th/cmp-nvim-lsp/
     cmp-nvim-lsp-signature-help # https://github.com/hrsh7th/cmp-nvim-lsp-signature-help/
     cmp-buffer # current buffer as completion source | https://github.com/hrsh7th/cmp-buffer/
@@ -53,6 +54,7 @@ with final.pkgs.lib; let
     nvim-treesitter-context # nvim-treesitter-context
     barbar-nvim # tab bar | https://github.com/romgrk/barbar.nvim
     # alternative https://github.com/akinsho/bufferline.nvim
+    which-key-nvim # popup with possible keybindings | https://github.com/folke/which-key.nvim/
     # ^ UI
 
     # language support
@@ -113,6 +115,13 @@ with final.pkgs.lib; let
   my-python-packages = ps:
     with ps; [
       python-lsp-server
+      mypy
+      pylsp-mypy
+      pyls-isort
+      python-lsp-black
+      pyls-memestra
+      python-lsp-ruff
+      pylsp-rope
       debugpy
     ];
 
