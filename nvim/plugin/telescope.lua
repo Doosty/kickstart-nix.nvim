@@ -1,7 +1,9 @@
 local telescope = require('telescope')
 local actions = require('telescope.actions')
+
 local builtin = require('telescope.builtin')
--- local extensions = telescope.extensions
+
+local extensions = telescope.extensions
 
 local layout_config = {
   vertical = {
@@ -64,35 +66,22 @@ local function fuzzy_grep_current_file_type()
   grep_current_file_type(fuzzy_grep)
 end
 
-vim.keymap.set('n', '<leader>tgf', builtin.git_files, { desc = '[telescope] git files' })
-vim.keymap.set('n', '<leader>tff', builtin.find_files, { desc = '[telescope] find files' })
-vim.keymap.set('n', '<leader>tht', builtin.help_tags, { desc = '[telescope] help tags' })
-vim.keymap.set('n', '<leader>tdn', builtin.diagnostics, { desc = '[telescope] diagnostics' })
-vim.keymap.set('n', '<leader>trs', builtin.resume, { desc = '[telescope] resume' })
+vim.keymap.set('n', '<leader>tp', function()
+  builtin.find_files()
+end, { desc = '[telescope] find files' })
+vim.keymap.set('n', '<M-p>', builtin.oldfiles, { desc = '[telescope] old files' })
+vim.keymap.set('n', '<C-g>', builtin.live_grep, { desc = '[telescope] live grep' })
+vim.keymap.set('n', '<leader>tf', fuzzy_grep, { desc = '[telescope] fuzzy grep' })
+vim.keymap.set('n', '<M-f>', fuzzy_grep_current_file_type, { desc = '[telescope] fuzzy grep filetype' })
+vim.keymap.set('n', '<M-g>', live_grep_current_file_type, { desc = '[telescope] live grep filetype' })
+vim.keymap.set('n', '<leader>t*', grep_string_current_file_type, { desc = '[telescope] grep string filetype' })
+vim.keymap.set('n', '<leader>*', builtin.grep_string, { desc = '[telescope] grep string' })
+vim.keymap.set('n', '<leader>tg', project_files, { desc = '[telescope] project files' })
+vim.keymap.set('n', '<leader>tc', builtin.quickfix, { desc = '[telescope] quickfix list' })
+vim.keymap.set('n', '<leader>tq', builtin.command_history, { desc = '[telescope] command history' })
+vim.keymap.set('n', '<leader>tl', builtin.loclist, { desc = '[telescope] loclist' })
+vim.keymap.set('n', '<leader>tr', builtin.registers, { desc = '[telescope] registers' })
 vim.keymap.set('n', '<leader>tbb', builtin.buffers, { desc = '[telescope] buffers' })
-vim.keymap.set('n', '<leader>trg', builtin.registers, { desc = '[telescope] registers' })
-vim.keymap.set('n', '<leader>tll', builtin.loclist, { desc = '[telescope] loclist' })
-vim.keymap.set('n', '<leader>tch', builtin.command_history, { desc = '[telescope] command history' })
-vim.keymap.set('n', '<leader>tql', builtin.quickfix, { desc = '[telescope] quickfix list' })
-vim.keymap.set('n', '<leader>tof', builtin.oldfiles, { desc = '[telescope] old files' })
-vim.keymap.set('n', '<leader>tpf', project_files, { desc = '[telescope] project files' })
-
--- Telescope -> Search -> String
-vim.keymap.set('n', '<leader>tss', builtin.grep_string, { desc = '[telescope] grep string' })
-vim.keymap.set('n', '<leader>tssl', builtin.live_grep, { desc = '[telescope] live grep' })
-vim.keymap.set('n', '<leader>tssf', fuzzy_grep, { desc = '[telescope] fuzzy grep' })
--- Telescope -> Search -> Type of file
-vim.keymap.set('n', '<leader>tsts', grep_string_current_file_type, { desc = '[telescope] grep string filetype current' })
-vim.keymap.set('n', '<leader>tstf', fuzzy_grep_current_file_type, { desc = '[telescope] grep filetype fuzzy' })
-vim.keymap.set('n', '<leader>tstl', live_grep_current_file_type, { desc = '[telescope] grep filetype live' })
-
--- open file_browser with the path of the current buffer
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>fb",
-  ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
-  { noremap = true ,desc = '[telescope] file browser (current buffer)'}
-)
 vim.keymap.set(
   'n',
   '<leader>tbf',
@@ -116,7 +105,7 @@ telescope.setup {
     layout_config = layout_config,
     mappings = {
       i = {
-        ['<C-f>'] = actions.send_to_qflist,
+        ['<C-q>'] = actions.send_to_qflist,
         ['<C-l>'] = actions.send_to_loclist,
         -- ['<esc>'] = actions.close,
         ['<C-s>'] = actions.cycle_previewers_next,
@@ -124,7 +113,7 @@ telescope.setup {
       },
       n = {
         q = actions.close,
-        -- s = flash,
+        s = flash,
       },
     },
     preview = {
@@ -160,6 +149,4 @@ telescope.setup {
 }
 
 telescope.load_extension('fzy_native')
-telescope.load_extension('file_browser')
-telescope.load_extension('dap')
 -- telescope.load_extension('smart_history')
