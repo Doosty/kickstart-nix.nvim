@@ -33,17 +33,21 @@ vim.keymap.set('n', '<leader>B', function()
   dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
 end, { desc = '[debug] Set Conditional Breakpoint' })
 
--- Icons
-vim.fn.sign_define('DapBreakpoint',{ text ='🟥', texthl ='', linehl ='', numhl =''})
+-- Icons 🔴 🟥
+vim.fn.sign_define('DapBreakpoint',{ text ='🔴', texthl ='', linehl ='', numhl =''})
 vim.fn.sign_define('DapStopped',{ text ='▶️', texthl ='', linehl ='', numhl =''})
+-- https://github.com/mfussenegger/nvim-dap/discussions/355
 
 -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
 vim.keymap.set('n', '<F7>', dapui.toggle, { desc = '[debug] See last session result.' })
 
+-- Open/close automatically
 dap.listeners.after.event_initialized['dapui_config'] = dapui.open
 dap.listeners.before.event_terminated['dapui_config'] = dapui.close
 dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
+-- Load ./launch.json configuration
+require('dap.ext.vscode').load_launchjs('launch.json', {})
 
 -- Install language specifics
 -- Python

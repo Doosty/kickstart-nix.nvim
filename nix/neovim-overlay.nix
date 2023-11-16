@@ -10,7 +10,6 @@ with final.pkgs.lib; let
     };
 
   mkNeovim = pkgs.callPackage ./mkNeovim.nix {};
-
   all-plugins = with pkgs.vimPlugins; [
     # plugins from nixpkgs go in here.
     neo-tree-nvim # file tree | https://github.com/nvim-neo-tree/neo-tree.nvim
@@ -110,11 +109,13 @@ with final.pkgs.lib; let
     (mkNvimPlugin inputs.wf-nvim "wf.nvim") # keymap hints | https://github.com/Cassin01/wf.nvim
     # ^ bleeding-edge plugins from flake inputs
 
-
     # To consider
     # https://github.com/iamcco/markdown-preview.nvim
+    # https://github.com/folke/trouble.nvim
     # To consider ^
-
+  ];
+  plugins-csharp = with pkgs.vimPlugins; [
+    (mkNvimPlugin inputs.omnisharp-vim "omnisharp.vim") # https://github.com/OmniSharp/Omnisharp-vim
   ];
   my-python-packages = ps:
     with ps; [
@@ -134,17 +135,31 @@ with final.pkgs.lib; let
   extraPackages = with pkgs; [
     (python3.withPackages my-python-packages)
     lua-language-server
-    nil
-    alejandra
+    nil # nix lsp
+    alejandra # nix formatter
     git
     ripgrep
     fd
+  ];
+  packages-csharp = with pkgs; [
+    # https://aaronbos.dev/posts/csharp-dotnet-neovim
+    omnisharp-roslyn # csharp lsp
+    # https://aaronbos.dev/posts/debugging-csharp-neovim-nvim-dap
+    netcoredbg # csharp debug adapter
   ];
 in {
   # This is the neovim derivation
   # returned by the overlay
   nvim-pkg = mkNeovim {
     plugins = all-plugins;
+    inherit extraPackages;
+  };
+
+  nvim-csharp = mkNeovim {
+    viAlias = false;
+    vimAlias = false;
+    appName = "nvim-csharp";
+    plugins = all-plugins; #++ plugins-csharp;
     inherit extraPackages;
   };
 

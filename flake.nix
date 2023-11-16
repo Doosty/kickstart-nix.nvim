@@ -11,6 +11,10 @@
       url = "github:Cassin01/wf.nvim";
       flake = false;
     };
+    omnisharp-vim = {
+      url = "github:OmniSharp/Omnisharp-vim";
+      flake = false;
+    };
   };
 
   outputs = inputs @ {
