@@ -47,3 +47,9 @@
 `gbac` - Toggle comment around a class (w/ LSP/treesitter support)
 ```
 
+### Wf which key
+- Press either <space>, [, ], '  then wait 1 second
+
+Normal, Insert 	<C-t> 	Toggle the which-key with the fuzzy-find
+Normal 	<ESC> 	Close wf.nvim
+Normal 	<C-c> 	Close wf.nvim

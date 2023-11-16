@@ -23,12 +23,14 @@ with final.pkgs.lib; let
     nvim-cmp # https://github.com/hrsh7th/nvim-cmp
     cmp_luasnip # snippets autocompletion extension for nvim-cmp | https://github.com/saadparwaiz1/cmp_luasnip/
     lspkind-nvim # vscode-like LSP pictograms | https://github.com/onsails/lspkind.nvim/
+    friendly-snippets # https://github.com/rafamadriz/friendly-snippets/
     cmp-nvim-lsp # LSP as completion source | https://github.com/hrsh7th/cmp-nvim-lsp/
     cmp-nvim-lsp-signature-help # https://github.com/hrsh7th/cmp-nvim-lsp-signature-help/
     cmp-buffer # current buffer as completion source | https://github.com/hrsh7th/cmp-buffer/
     cmp-path # file paths as completion source | https://github.com/hrsh7th/cmp-path/
     cmp-nvim-lua # neovim lua API as completion source | https://github.com/hrsh7th/cmp-nvim-lua/
-    cmp-cmdline
+    cmp-cmdline # cmp command line suggestions
+    cmp-cmdline-history # cmp command line history suggestions
     # ^ nvim-cmp extensions
 
     # git integration plugins
@@ -48,11 +50,13 @@ with final.pkgs.lib; let
     # ^ telescope and extensions
 
     # UI
-    lualine-nvim # Status line | https://github.com/nvim-lualine/lualine.nvim/
-    statuscol-nvim # Status column | https://github.com/luukvbaal/statuscol.nvim/
+    lualine-nvim # https://github.com/nvim-lualine/lualine.nvim/
+    statuscol-nvim # https://github.com/luukvbaal/statuscol.nvim/
     nvim-treesitter-context # nvim-treesitter-context
-    barbar-nvim # tab bar | https://github.com/romgrk/barbar.nvim
+    barbar-nvim # https://github.com/romgrk/barbar.nvim
+    bufferline-nvim
     # alternative https://github.com/akinsho/bufferline.nvim
+    which-key-nvim # https://github.com/folke/which-key.nvim/
     # ^ UI
 
     # language support
@@ -74,8 +78,10 @@ with final.pkgs.lib; let
     nvim-unception # Prevent nested neovim sessions | nvim-unception
     vim-sleuth # Detect tabstop and shiftwidth automatically
     toggleterm-nvim # Terminals inside nvim
-    indent-blankline-nvim # Indentation visual helper
+    indent-blankline-nvim # https://github.com/lukas-reineke/indent-blankline.nvim
     nvim-navbuddy # LSP navigation over symbols
+    nvim-ufo
+    promise-async
     # ^ Useful utilities
 
     # Debugging
@@ -113,7 +119,16 @@ with final.pkgs.lib; let
   my-python-packages = ps:
     with ps; [
       python-lsp-server
+      #mypy
+      #pylsp-mypy
+      pyls-isort
+      python-lsp-black
+      pyls-memestra
+      python-lsp-ruff
+      pylsp-rope
       debugpy
+      django-stubs
+      jedi
     ];
 
   extraPackages = with pkgs; [

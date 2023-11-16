@@ -1,19 +1,18 @@
 local api = vim.api
 
-local tempdirgroup = api.nvim_create_augroup('tempdir', { clear = true })
--- Do not set undofile for files in /tmp
-api.nvim_create_autocmd('BufWritePre', {
-  pattern = '/tmp/*',
-  group = tempdirgroup,
-  callback = function()
-    vim.cmd.setlocal('noundofile')
-  end,
-})
+-- local tempdirgroup = api.nvim_create_augroup('tempdir', { clear = true })
+-- -- Do not set undofile for files in /tmp
+-- api.nvim_create_autocmd('BufWritePre', {
+--   pattern = '/tmp/*',
+--   group = tempdirgroup,
+--   callback = function()
+--     vim.cmd.setlocal('noundofile')
+--   end,
+-- })
 
 -- Toggle between relative/absolute line numbers
 -- Show relative line numbers in the current buffer,
 -- absolute line numbers in inactive buffers
-
 --local numbertoggle = api.nvim_create_augroup('numbertoggle', { clear = true })
 --api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
 --  pattern = '*',
@@ -36,16 +35,17 @@ api.nvim_create_autocmd('BufWritePre', {
 --})
 
 -- Disable spell checking in terminal buffers
-local nospell_group = api.nvim_create_augroup('nospell', { clear = true })
-api.nvim_create_autocmd('TermOpen', {
-  group = nospell_group,
-  callback = function()
-    vim.wo[0].spell = false
-  end,
-})
+-- local nospell_group = api.nvim_create_augroup('nospell', { clear = true })
+-- api.nvim_create_autocmd('TermOpen', {
+--   group = nospell_group,
+--   callback = function()
+--     vim.wo[0].spell = false
+--   end,
+-- })
 
 -- LSP
 local keymap = vim.keymap
+local ts = require('telescope.builtin')
 
 local function preview_location_callback(_, result)
   if result == nil or vim.tbl_isempty(result) then
@@ -93,32 +93,38 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local function desc(description)
       return { noremap = true, silent = true, buffer = bufnr, desc = description }
     end
-    keymap.set('n', 'gD', vim.lsp.buf.declaration, desc('[lsp] go to declaration'))
-    keymap.set('n', 'gd', vim.lsp.buf.definition, desc('[lsp] go to definition'))
-    keymap.set('n', '<space>gt', vim.lsp.buf.type_definition, desc('[lsp] go to type definition'))
+    -- keymap.set('n', 'gD', vim.lsp.buf.declaration, desc('[lsp] go to declaration'))
+    -- keymap.set('n', 'gd', vim.lsp.buf.definition, desc('[lsp] go to definition'))
+    -- keymap.set('n', '<space>gt', vim.lsp.buf.type_definition, desc('[lsp] go to type definition'))
     keymap.set('n', 'K', vim.lsp.buf.hover, desc('[lsp] hover'))
     keymap.set('n', '<space>pd', peek_definition, desc('[lsp] peek definition'))
-    keymap.set('n', '<space>pt', peek_type_definition, desc('[lsp] peek type definition'))
-    keymap.set('n', 'gi', vim.lsp.buf.implementation, desc('[lsp] go to implementation'))
-    keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, desc('[lsp] signature help'))
-    keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, desc('[lsp] add workspace folder'))
-    keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, desc('[lsp] remove workspace folder'))
-    keymap.set('n', '<space>wl', function()
-      vim.print(vim.lsp.buf.list_workspace_folders())
-    end, desc('[lsp] list workspace folders'))
-    keymap.set('n', '<space>rn', vim.lsp.buf.rename, desc('[lsp] rename'))
-    keymap.set('n', '<space>wq', vim.lsp.buf.workspace_symbol, desc('[lsp] workspace symbol'))
-    keymap.set('n', '<space>dd', vim.lsp.buf.document_symbol, desc('[lsp] document symbol'))
-    keymap.set('n', '<M-CR>', vim.lsp.buf.code_action, desc('[lsp] code action'))
-    keymap.set('n', '<M-l>', vim.lsp.codelens.run, desc('[lsp] run code lens'))
-    keymap.set('n', '<space>cr', vim.lsp.codelens.refresh, desc('[lsp] refresh code lenses'))
-    keymap.set('n', 'gr', vim.lsp.buf.references, desc('[lsp] find references'))
-    keymap.set('n', '<space>f', function()
-      vim.lsp.buf.format { async = true }
-    end, desc('[lsp] format buffer'))
-    keymap.set('n', '<space>h', function()
-      vim.lsp.inlay_hint(bufnr)
-    end, desc('[lsp] toggle inlay hints'))
+    -- keymap.set('n', '<space>pt', peek_type_definition, desc('[lsp] peek type definition'))
+    -- keymap.set('n', 'gi', vim.lsp.buf.implementation, desc('[lsp] go to implementation'))
+    -- keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, desc('[lsp] signature help'))
+    -- keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, desc('[lsp] add workspace folder'))
+    -- keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, desc('[lsp] remove workspace folder'))
+    -- keymap.set('n', '<space>wl', function()
+    --   vim.print(vim.lsp.buf.list_workspace_folders())
+    -- end, desc('[lsp] list workspace folders'))
+    -- keymap.set('n', '<space>lrn', vim.lsp.buf.rename, desc('[lsp] rename'))
+    -- keymap.set('n', '<space>wq', vim.lsp.buf.workspace_symbol, desc('[lsp] workspace symbol'))
+    -- keymap.set('n', '<space>dd', vim.lsp.buf.document_symbol, desc('[lsp] document symbol'))
+    -- keymap.set('n', '<M-CR>', vim.lsp.buf.code_action, desc('[lsp] code action'))
+    -- keymap.set('n', '<M-l>', vim.lsp.codelens.run, desc('[lsp] run code lens'))
+    -- keymap.set('n', '<space>cr', vim.lsp.codelens.refresh, desc('[lsp] refresh code lenses'))
+    -- keymap.set('n', 'gr', vim.lsp.buf.references, desc('[lsp] find references'))
+    -- keymap.set('n', '<space>f', function()
+    --   vim.lsp.buf.format { async = true }
+    -- end, desc('[lsp] format buffer'))
+    -- keymap.set('n', '<space>h', function()
+    --   vim.lsp.inlay_hint(bufnr)
+    -- end, desc('[lsp] toggle inlay hints'))
+    keymap.set('n', 'gd', ts.lsp_definitions, desc('[G]oto [D]efinition'))
+    keymap.set('n', 'gr', ts.lsp_references, desc('[G]oto [R]eferences'))
+    keymap.set('n', 'gI', ts.lsp_implementations, desc('[G]oto [I]mplementation'))
+    keymap.set('n', '<leader>D', ts.lsp_type_definitions, desc('Type [D]efinition'))
+    keymap.set('n', '<leader>ds', ts.lsp_document_symbols, desc('[D]ocument [S]ymbols'))
+    keymap.set('n', '<leader>ws', ts.lsp_dynamic_workspace_symbols, desc('[W]orkspace [S]ymbols'))
 
     -- Auto-refresh code lenses
     if not client then

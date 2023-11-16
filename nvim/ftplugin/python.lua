@@ -6,11 +6,11 @@ if vim.fn.executable(pylsp_cmd) ~= 1 then
 end
 
 local root_files = {
-  'manage.py',
+  'pyproject.toml',
   'setup.py',
-  'pyproject.py',
+  'setup.cfg',
   'requirements.txt',
-  '.git',
+  'Pipfile',
 }
 
 vim.lsp.start {
@@ -18,5 +18,8 @@ vim.lsp.start {
   cmd = { pylsp_cmd },
   root_dir = vim.fs.dirname(vim.fs.find(root_files, { upward = true })[1]),
   capabilities = require('user.lsp').make_client_capabilities(),
+  settings = {
+    single_file_support = true,
+  },
 }
 

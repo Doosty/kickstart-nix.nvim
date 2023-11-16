@@ -32,6 +32,7 @@ opt.lazyredraw = true
 opt.showmatch = true -- Highlight matching parentheses, etc
 opt.incsearch = true
 opt.hlsearch = true
+opt.breakindent = true
 
 opt.spell = true
 opt.spelllang = 'en'
@@ -40,7 +41,6 @@ opt.expandtab = true
 opt.tabstop = 2
 opt.softtabstop = 2
 opt.shiftwidth = 2
-opt.foldenable = true
 opt.history = 2000
 opt.nrformats = 'bin,hex' -- 'octal'
 opt.undofile = true
@@ -119,5 +119,6 @@ vim.g.sqlite_clib_path = require('luv').os_getenv('LIBSQLITE')
 cmd.colorscheme('catppuccin')
 --cmd.colorscheme('dracula')
 
---local dap, dapui = require("dap"), require("dapui")
---dapui.setup()
+-- Logging
+-- vim.lsp.set_log_level("debug")
+
