@@ -53,6 +53,7 @@
       packages = rec {
         default = nvim;
         nvim = pkgs.nvim-pkg;
+        nvim-csharp = pkgs.nvim-csharp;
       };
       devShells = {
         default = shell;
