@@ -115,8 +115,11 @@ cmd.packadd('cfilter') -- Allows filtering the quickfix list with :cfdo
 vim.g.sqlite_clib_path = require('luv').os_getenv('LIBSQLITE')
 
 -- Color scheme
---cmd.colorscheme('onedark')
-cmd.colorscheme('catppuccin')
+-- require('onedark').setup {
+--     style = 'darker' -- 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+-- }
+-- cmd.colorscheme('onedark')
+-- cmd.colorscheme('catppuccin')
 --cmd.colorscheme('dracula')
 
 -- Logging

@@ -11,6 +11,14 @@
       url = "github:Cassin01/wf.nvim";
       flake = false;
     };
+    venv-selector = {
+      url = "github:linux-cultist/venv-selector.nvim";
+      flake = false;
+    };
+    py_lsp = {
+      url = "github:HallerPatrick/py_lsp.nvim";
+      flake = false;
+    };
     omnisharp-vim = {
       url = "github:OmniSharp/Omnisharp-vim";
       flake = false;

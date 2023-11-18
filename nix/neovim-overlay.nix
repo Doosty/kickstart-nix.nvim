@@ -107,6 +107,8 @@ with final.pkgs.lib; let
 
     # bleeding-edge plugins from flake inputs
     (mkNvimPlugin inputs.wf-nvim "wf.nvim") # keymap hints | https://github.com/Cassin01/wf.nvim
+    (mkNvimPlugin inputs.venv-selector "venv-selector.nvim") # keymap hints | https://github.com/Cassin01/wf.nvim
+    (mkNvimPlugin inputs.py_lsp "py_lsp.nvim") # https://github.com/HallerPatrick/py_lsp.nvim
     # ^ bleeding-edge plugins from flake inputs
 
     # To consider
@@ -159,8 +161,9 @@ in {
     viAlias = false;
     vimAlias = false;
     appName = "nvim-csharp";
-    plugins = all-plugins; #++ plugins-csharp;
+    plugins = all-plugins ++ plugins-csharp;
     inherit extraPackages;
+    inherit packages-csharp;
   };
 
   # You can add as many derivations as you like.
