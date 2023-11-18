@@ -50,11 +50,29 @@
         "type": "github"
       }
     },
+    "py_lsp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1677613736,
+        "narHash": "sha256-YOYrumIYlWcZBL1LSeBWseb/0G4n8obcll6wPwaXqpM=",
+        "owner": "HallerPatrick",
+        "repo": "py_lsp.nvim",
+        "rev": "5b2bd6433a2dbab76d54d58ccc1d1e89b220091c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "HallerPatrick",
+        "repo": "py_lsp.nvim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
         "omnisharp-vim": "omnisharp-vim",
+        "py_lsp": "py_lsp",
+        "venv-selector": "venv-selector",
         "wf-nvim": "wf-nvim"
       }
     },
@@ -70,6 +88,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "venv-selector": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1699984799,
+        "narHash": "sha256-52DojadTx7iBp8x5VFhqOIJP5B/DaqT+K55b70v3dr0=",
+        "owner": "linux-cultist",
+        "repo": "venv-selector.nvim",
+        "rev": "c259dacb20a00fb84ec6006e9a24b4085b27120a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "linux-cultist",
+        "repo": "venv-selector.nvim",
         "type": "github"
       }
     },
