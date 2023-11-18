@@ -10,7 +10,7 @@ with final.pkgs.lib; let
     };
 
   mkNeovim = pkgs.callPackage ./mkNeovim.nix {};
-  all-plugins = with pkgs.vimPlugins; [
+  plugins-all = with pkgs.vimPlugins; [
     # plugins from nixpkgs go in here.
     neo-tree-nvim # file tree | https://github.com/nvim-neo-tree/neo-tree.nvim
     # https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=vimPlugins
@@ -91,8 +91,8 @@ with final.pkgs.lib; let
     # Debugging ^
 
     # Color theme
-    #onedark-nvim
-    catppuccin-nvim
+    onedark-nvim
+    # catppuccin-nvim
     #dracula-nvim
     # Color theme ^
 
@@ -134,7 +134,7 @@ with final.pkgs.lib; let
       jedi
     ];
 
-  extraPackages = with pkgs; [
+  packages-all = with pkgs; [
     (python3.withPackages my-python-packages)
     lua-language-server
     nil # nix lsp
@@ -150,21 +150,16 @@ with final.pkgs.lib; let
     netcoredbg # csharp debug adapter
   ];
 in {
-  # This is the neovim derivation
-  # returned by the overlay
   nvim-pkg = mkNeovim {
-    plugins = all-plugins;
-    inherit extraPackages;
+    plugins = plugins-all;
+    extraPackages = packages-all;
   };
 
   nvim-csharp = mkNeovim {
     viAlias = false;
     vimAlias = false;
     appName = "nvim-csharp";
-    plugins = all-plugins ++ plugins-csharp;
-    inherit extraPackages;
-    inherit packages-csharp;
+    plugins = plugins-all ++ plugins-csharp;
+    extraPackages = packages-all ++ packages-csharp;
   };
-
-  # You can add as many derivations as you like.
 }

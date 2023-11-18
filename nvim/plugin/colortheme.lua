@@ -1,6 +1,8 @@
--- cmd.colorscheme('onedark')
 require('onedark').setup {
-    style = 'darker' -- 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+    -- 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+    style = 'dark'
 }
 require('onedark').load()
 vim.cmd.colorscheme('onedark')
+
+-- cmd.colorscheme('catppuccin')
