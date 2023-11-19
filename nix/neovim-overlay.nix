@@ -116,9 +116,6 @@ with final.pkgs.lib; let
     # https://github.com/folke/trouble.nvim
     # To consider ^
   ];
-  plugins-csharp = with pkgs.vimPlugins; [
-    (mkNvimPlugin inputs.omnisharp-vim "omnisharp.vim") # https://github.com/OmniSharp/Omnisharp-vim
-  ];
   my-python-packages = ps:
     with ps; [
       python-lsp-server
@@ -148,6 +145,9 @@ with final.pkgs.lib; let
     omnisharp-roslyn # csharp lsp
     # https://aaronbos.dev/posts/debugging-csharp-neovim-nvim-dap
     netcoredbg # csharp debug adapter
+  ];
+  plugins-csharp = with pkgs.vimPlugins; [
+    (mkNvimPlugin inputs.omnisharp-vim "omnisharp.vim") # https://github.com/OmniSharp/Omnisharp-vim
   ];
 in {
   nvim-pkg = mkNeovim {
