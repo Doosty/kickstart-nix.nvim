@@ -7,22 +7,10 @@
 
     # Add bleeding-edge plugins here.
     # They can be updated with `nix flake update` (make sure to commit the generated flake.lock)
-    wf-nvim = {
-      url = "github:Cassin01/wf.nvim";
-      flake = false;
-    };
-    venv-selector = {
-      url = "github:linux-cultist/venv-selector.nvim";
-      flake = false;
-    };
-    py_lsp = {
-      url = "github:HallerPatrick/py_lsp.nvim";
-      flake = false;
-    };
-    omnisharp-vim = {
-      url = "github:OmniSharp/Omnisharp-vim";
-      flake = false;
-    };
+    # wf-nvim = {
+    #   url = "github:Cassin01/wf.nvim";
+    #   flake = false;
+    # };
   };
 
   outputs = inputs @ {
@@ -61,7 +49,6 @@
       packages = rec {
         default = nvim;
         nvim = pkgs.nvim-pkg;
-        nvim-csharp = pkgs.nvim-csharp;
       };
       devShells = {
         default = shell;
