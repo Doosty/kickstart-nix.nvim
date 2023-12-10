@@ -51,6 +51,7 @@ If Nix and Neovim have one thing in common, it's that many new users don't know 
 - [Philosophy](#philosophy)
 - [Design](#design)
 - [Pre-configured plugins](#pre-configured-plugins)
+- [Syncing updates](#syncing-updates)
 - [Alternative / similar projects](#alternative--similar-projects)
 
 ## Test drive
@@ -174,8 +175,7 @@ Directory structure:
 ── flake.nix
 ── nix
   ├── mkNeovim.nix # Function for creating the Neovim derivation
-  ├── neovim-overlay.nix # Overlay that adds Neovim derivation
-  └── plugin-overlay.nix # Overlay that builds flake input plugins
+  └── neovim-overlay.nix # Overlay that adds Neovim derivation
 ```
 
 ### Initialization order
@@ -201,6 +201,24 @@ You can add or remove plugins by
 - Adding/Removing them in the [Nix list](./nix/neovim-overlay.nix).
 - Adding/Removing the config in `nvim/plugin/<plugin>.lua`.
 
+## Syncing updates
+
+If you have used this template and would like to fetch updates
+that were added later...
+
+Add this template as a remote:
+
+```console
+git remote add upstream git@github.com:mrcjkb/kickstart-nix.nvim.git
+```
+
+Fetch and merge changes:
+
+```console
+git fetch upstream
+git merge upstream/main --allow-unrelated-histories
+```
+
 ## Alternative / similar projects
 
 - [`kickstart.nvim`](https://github.com/nvim-lua/kickstart.nvim):
@@ -210,6 +228,9 @@ You can add or remove plugins by
   Configured using a Nix module DSL.
 - [`NixVim`](https://github.com/nix-community/nixvim):
   A Neovim distribution configured using a NixOS module.
+- [`nixCats-nvim`](https://github.com/BirdeeHub/nixCats-nvim):
+  A project with a similar philosophy to this one
+  that organises plugins into categories.
 
 > **Note**
 >
