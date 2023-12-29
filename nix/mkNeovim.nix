@@ -27,9 +27,7 @@ with lib;
       runtime = {};
     };
 
-    externalPackages =
-      extraPackages
-      ++ (optionals withSqlite [pkgs.sqlite]);
+    externalPackages = extraPackages ++ (optionals withSqlite [pkgs.sqlite]);
 
     normalizedPlugins = map (x:
       defaultPlugin
@@ -72,6 +70,7 @@ with lib;
       )
       + ''
         vim.opt.rtp:append('${../nvim}')
+        vim.opt.rtp:append('${../nvim/after}')
       '';
 
     extraMakeWrapperArgs = builtins.concatStringsSep " " (
@@ -81,9 +80,9 @@ with lib;
         ''--prefix PATH : "${makeBinPath externalPackages}"'')
       ++ (optional wrapRc
         ''--add-flags -u --add-flags "${pkgs.writeText "init.lua" customRC}"'')
-      ++ (optional withSqlite
+      ++ (optional withSqlite 
         ''--set LIBSQLITE_CLIB_PATH "${pkgs.sqlite.out}/lib/libsqlite3.so"'')
-      ++ (optional withSqlite
+      ++ (optional withSqlite 
         ''--set LIBSQLITE "${pkgs.sqlite.out}/lib/libsqlite3.so"'')
     );
 
