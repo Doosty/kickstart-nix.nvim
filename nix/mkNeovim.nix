@@ -2,6 +2,7 @@
 {
   pkgs,
   lib,
+  stdenv,
 }:
 with lib;
   {
@@ -27,9 +28,7 @@ with lib;
       runtime = {};
     };
 
-    externalPackages =
-      extraPackages
-      ++ (optionals withSqlite [pkgs.sqlite]);
+    externalPackages = extraPackages ++ (optionals withSqlite [pkgs.sqlite]);
 
     normalizedPlugins = map (x:
       defaultPlugin
@@ -45,10 +44,34 @@ with lib;
       plugins = normalizedPlugins;
     };
 
+    # Split rtp into 3 directories:
+    # - lua, to be prepended to the rtp at the beginning of init.lua
+    # - nvim, containing plugin, ftplugin, ... subdirectories
+    # - after, to be sourced last in the startup initialization
+    nvimRtp = stdenv.mkDerivation {
+      name = "nvim-rtp";
+      src = ../nvim;
+
+      buildPhase = ''
+        mkdir -p $out/nvim
+        mkdir -p $out/after
+        mkdir -p $out/lua
+        rm init.lua
+      '';
+
+      installPhase = ''
+        cp -r after $out/after
+        rm -r after
+        cp -r lua $out/lua
+        rm -r lua
+        cp -r * $out/nvim
+      '';
+    };
+
     customRC =
       ''
         vim.loader.enable()
-        vim.opt.rtp:prepend('${../nvim/lua}')
+        vim.opt.rtp:prepend('${nvimRtp}/lua')
       ''
       + (builtins.readFile ../nvim/init.lua)
       + neovimConfig.neovimRcContent
@@ -71,7 +94,8 @@ with lib;
         devPlugins
       )
       + ''
-        vim.opt.rtp:append('${../nvim}')
+        vim.opt.rtp:append('${nvimRtp}/nvim')
+        vim.opt.rtp:append('${nvimRtp}/after')
       '';
 
     extraMakeWrapperArgs = builtins.concatStringsSep " " (
@@ -81,9 +105,9 @@ with lib;
         ''--prefix PATH : "${makeBinPath externalPackages}"'')
       ++ (optional wrapRc
         ''--add-flags -u --add-flags "${pkgs.writeText "init.lua" customRC}"'')
-      ++ (optional withSqlite
+      ++ (optional withSqlite 
         ''--set LIBSQLITE_CLIB_PATH "${pkgs.sqlite.out}/lib/libsqlite3.so"'')
-      ++ (optional withSqlite
+      ++ (optional withSqlite 
         ''--set LIBSQLITE "${pkgs.sqlite.out}/lib/libsqlite3.so"'')
     );
 
