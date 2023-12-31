@@ -1,11 +1,7 @@
-vim.keymap.set('n', '<leader>gdhb', function()
+vim.keymap.set('n', '<leader>glf', function()
   vim.cmd.DiffviewFileHistory(vim.api.nvim_buf_get_name(0))
-end, { desc = '[diffview] files history (current buffer)' })
-
-vim.keymap.set('n', '<leader>gdhd', vim.cmd.DiffviewFileHistory, { desc = '[diffview] files history (cwd)' })
-
-vim.keymap.set('n', '<leader>gdo', vim.cmd.DiffviewOpen, { desc = '[diffview] open' })
-
-vim.keymap.set('n', '<leader>gdc', vim.cmd.DiffviewClose, { desc = '[diffview] close' })
-
-vim.keymap.set('n', '<leader>gdf', vim.cmd.DiffviewToggleFiles, { desc = '[diffview] files toggle' })
+end, { desc = '[diffview] file history (current buffer)' })
+vim.keymap.set('n', '<leader>gld', vim.cmd.DiffviewOpen, { desc = '[diffview] open' })
+vim.keymap.set('n', '<leader>gd', vim.cmd.DiffviewOpen, { desc = '[diffview] open' })
+vim.keymap.set('n', '<leader>df', vim.cmd.DiffviewToggleFiles, { desc = '[diffview] toggle files' })
+vim.keymap.set('n', '<leader>gf', vim.cmd.DiffviewFileHistory, { desc = '[diffview] file history (cwd)' })
