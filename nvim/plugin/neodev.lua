@@ -16,7 +16,6 @@ local function has_file(root_dir, file)
 end
 
 require('neodev').setup {
-  library = { plugins = { "nvim-dap-ui" }, types = true },
   override = function(root_dir, library)
     if has_file(root_dir, '/etc/nixos') or has_file(root_dir, 'nvim-config') then
       library.enabled = true
