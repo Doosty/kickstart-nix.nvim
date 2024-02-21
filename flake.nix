@@ -7,22 +7,10 @@
 
     # Add bleeding-edge plugins here.
     # They can be updated with `nix flake update` (make sure to commit the generated flake.lock)
-    wf-nvim = {
-      url = "github:Cassin01/wf.nvim";
-      flake = false;
-    };
-    venv-selector = {
-      url = "github:linux-cultist/venv-selector.nvim";
-      flake = false;
-    };
-    py_lsp = {
-      url = "github:HallerPatrick/py_lsp.nvim";
-      flake = false;
-    };
-    omnisharp-vim = {
-      url = "github:OmniSharp/Omnisharp-vim";
-      flake = false;
-    };
+    # wf-nvim = {
+    #   url = "github:Cassin01/wf.nvim";
+    #   flake = false;
+    # };
   };
 
   outputs = inputs @ {
@@ -45,12 +33,14 @@
       pkgs = import nixpkgs {
         inherit system;
         overlays = [
+          # Import the overlay, so that the final Neovim derivation(s) can be accessed via pkgs.<nvim-pkg>
           neovim-overlay
         ];
       };
       shell = pkgs.mkShell {
         name = "nvim-devShell";
         buildInputs = with pkgs; [
+          # Tools for Lua and Nix development, useful for editing files in this repo
           lua-language-server
           nil
           stylua
@@ -61,7 +51,6 @@
       packages = rec {
         default = nvim;
         nvim = pkgs.nvim-pkg;
-        nvim-csharp = pkgs.nvim-csharp;
       };
       devShells = {
         default = shell;
