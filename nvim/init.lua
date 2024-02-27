@@ -3,16 +3,10 @@ local fn = vim.fn
 local opt = vim.o
 local g = vim.g
 
--- disable netrw
-g.loaded_netrw = 1
-g.loaded_netrwPlugin = 1
+-- <leader> key. Defaults to `\`. Some people prefer space.
+-- g.mapleader = ' '
+-- g.maplocalleader = ' '
 
--- Leader key
-g.mapleader = ' '
-g.maplocalleader = ' '
-
-cmd.syntax('on')
-cmd.syntax('enable')
 opt.compatible = false
 
 -- Enable true colour support
@@ -32,7 +26,6 @@ opt.lazyredraw = true
 opt.showmatch = true -- Highlight matching parentheses, etc
 opt.incsearch = true
 opt.hlsearch = true
-opt.breakindent = true
 
 opt.spell = true
 opt.spelllang = 'en'
@@ -41,6 +34,7 @@ opt.expandtab = true
 opt.tabstop = 2
 opt.softtabstop = 2
 opt.shiftwidth = 2
+opt.foldenable = true
 opt.history = 2000
 opt.nrformats = 'bin,hex' -- 'octal'
 opt.undofile = true
@@ -114,14 +108,8 @@ cmd.packadd('cfilter') -- Allows filtering the quickfix list with :cfdo
 -- let sqlite.lua (which some plugins depend on) know where to find sqlite
 vim.g.sqlite_clib_path = require('luv').os_getenv('LIBSQLITE')
 
--- Color scheme
--- require('onedark').setup {
---     style = 'darker' -- 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
--- }
--- cmd.colorscheme('onedark')
--- cmd.colorscheme('catppuccin')
---cmd.colorscheme('dracula')
-
--- Logging
--- vim.lsp.set_log_level("debug")
-
+-- this should be at the end, because
+-- it causes neovim to source ftplugins
+-- on the packpath when passing a file to the nvim command
+cmd.syntax('on')
+cmd.syntax('enable')
