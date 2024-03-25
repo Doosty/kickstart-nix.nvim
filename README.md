@@ -17,12 +17,13 @@
     <!-- · -->
     <!-- <a href="https://github.com/mrcjkb/kickstart-nix.nvim/discussions/new?category=q-a">Ask Question</a> -->
   <!-- </p> -->
+  <p>❄️</p>
   <p>
     <strong>
-      A simple <a href="https://nixos.org/">Nix</a> flake template repository for <a href="https://neovim.io/">Neovim</a> derivations. 
+      A dead simple <a href="https://nixos.org/">Nix</a> flake template repository</br>
+      for <a href="https://neovim.io/">Neovim</a> 
     </strong>
   </p>
-  <p>❄️</p>
 </div>
 <!-- markdownlint-restore -->
 
@@ -35,25 +36,56 @@
 
 ![](https://github.com/mrcjkb/kickstart-nix.nvim/assets/12857160/84faa268-82de-4401-acf3-efddc26dd58a)
 
-If Nix and Neovim have one thing in common, it's that many new users don't know where to get started. Most Nix-based Neovim setups assume deep expertise in both realms, abstracting away Neovim's core functionalities as well as the Nix internals used to build a Neovim config. `kickstart-nix.nvim` is different: It's geared for users of all levels, making the migration of Neovim configurations to Nix straightforward.
+## :grey_question: Why kickstart-nix.nvim
 
-> **Note**
+If Nix and Neovim have one thing in common,
+it's that many new users don't know where to get started.
+Most Nix-based Neovim setups assume deep expertise in both realms,
+abstracting away Neovim's core functionalities
+as well as the Nix internals used to build a Neovim config. 
+Frameworks and module-based DSLs are opinionated and difficult to diverge from
+with one's own modifications.
+
+`kickstart-nix.nvim` is different: 
+It's geared for users of all levels,
+making the migration of Neovim configurations to Nix straightforward.
+This project aims to be as simple as possible, while allowing
+for maximum flexibility.
+
+> [!NOTE]
 >
 > Similar to [`kickstart.nvim`](https://github.com/nvim-lua/kickstart.nvim),
 > this repository is meant to be used by **you** to begin your
 > **Nix**/Neovim journey; remove the things you don't use and add what you miss.
 
-## Quick Links
+## :milky_way: Philosophy
 
-- [Test drive](#test-drive)
-- [Usage](#usage)
-- [Installation](#installation)
-- [Philosophy](#philosophy)
-- [Design](#design)
-- [Pre-configured plugins](#pre-configured-plugins)
-- [Alternative / similar projects](#alternative--similar-projects)
+- KISS principle with sane defaults.
+- Manage plugins + external dependencies using Nix
+  (managing plugins shouldn't be the responsibility of a plugin).
+- Configuration entirely in Lua[^1] (Vimscript is also possible).
+  This makes it easy to migrate from non-nix dotfiles.
+- Use Neovim's built-in loading mechanisms. See:
+    - [`:h initialization`](https://neovim.io/doc/user/starting.html#initialization)
+    - [`:h runtimepath`](https://neovim.io/doc/user/options.html#'runtimepath')
+    - [`:h packadd`](https://neovim.io/doc/user/repeat.html#%3Apackadd)
+- Use Neovim's built-in LSP client, with Nix managing language servers.
 
-## Test drive
+[^1]: The absence of a Nix module DSL for Neovim configuration is deliberate.
+      If you were to copy the `nvim` directory to `$XDG_CONFIG_HOME`,
+      and install the plugins, it would work out of the box.
+
+## :star2: Features
+
+- Use either nixpkgs or flake inputs as plugin sources.
+- Usable on any device with Neovim and Nix installed.
+- Create multiple derivations with different sets of plugins,
+  and simple regex filters to exclude config files.
+- Uses Nix to generate a `.luarc.json` in the devShell's `shellHook`.
+  This sets up lua-language-server to recognize all plugins
+  and the Neovim API.
+
+## :bicyclist: Test drive
 
 If you have Nix installed (with [flakes](https://nixos.wiki/wiki/Flakes) enabled),
 you can test drive this by running:
@@ -62,7 +94,7 @@ you can test drive this by running:
 nix run "github:mrcjkb/kickstart-nix.nvim"
 ```
 
-## Usage
+## :books: Usage
 
 1. Click on [Use this template](https://github.com/mrcjkb/kickstart-nix.nvim/generate)
 to start a repo based on this template. **Do _not_ fork it**.
@@ -70,10 +102,18 @@ to start a repo based on this template. **Do _not_ fork it**.
 1. Add/remove plugin configs to/from the `nvim/plugin` directory.
 1. Modify as you wish (you will probably want to add a color theme, ...).
    See: [Design](#design).
+1. You can create more than one package using the `mkNeovim` function by
+    - Passing different plugin lists.
+    - Adding `ignoreConfigRegexes` (e.g. `= [ "^ftplugin/.*.lua" ]`).
 
-## Installation
+> [!TIP]
+>
+> The nix and lua files contain comments explaining
+> what everything does in detail.
 
-### NixOS (with flakes)
+## :zap: Installation
+
+### :snowflake: NixOS (with flakes)
 
 1. Add your flake to you NixOS flake inputs.
 1. Add the overlay provided by this flake.
@@ -93,7 +133,7 @@ environment.systemPackages = with pkgs; [
 ];
 ```
 
-### Non-NixOS
+### :penguin: Non-NixOS
 
 With Nix installed (flakes enabled), from the repo root:
 
@@ -101,29 +141,17 @@ With Nix installed (flakes enabled), from the repo root:
 nix profile install .#nvim
 ```
 
-## Philosophy
+## :robot: Design
 
-- Slightly opinionated defaults.
-- Manage plugins + external dependencies using Nix
-  (managing plugins shouldn't be the responsibility of a plugin).
-- Configuration entirely in Lua[^1] (Vimscript is also possible).
-  This makes it easy to migrate from non-nix dotfiles[^2].
-- Usable on any device with Neovim and Nix installed.
-- Ability to create multiple derivations with different sets of plugins.
-- Use either nixpkgs or flake inputs as plugin source.
-- Use Neovim's built-in loading mechanisms.
-    - See [`:h initializaion`](https://neovim.io/doc/user/starting.html#initialization)
-      and [`:h runtimepath`](https://neovim.io/doc/user/options.html#'runtimepath').
-- Use Neovim's built-in LSP client.
+Directory structure:
 
-[^1]: The absence of a Nix module DSL for Neovim configuration is deliberate.
-      If you were to copy the `nvim` directory to `$XDG_CONFIG_HOME`,
-      it would work out of the box.
-[^2]: Caveat: `after/` directories are not sourced in the Nix derivation.
+```sh
+── flake.nix
+── nvim # Neovim configs (lua), equivalent to ~/.config/nvim
+── nix # Nix configs
+```
 
-## Design
-
-### Neovim configs
+### :open_file_folder: Neovim configs
 
 - Set options in `init.lua`.
 - Source autocommands, user commands, keymaps,
@@ -141,15 +169,18 @@ Directory structure:
   ├── lua # Shared library modules
   │  └── user
   │     └── <lib>.lua
-  └── plugin # Automatically sourced at startup
-     ├── autocommands.lua
-     ├── commands.lua
-     ├── keymaps.lua
-     ├── plugins.lua # Plugins that require a `setup` call
-     └── <plugin-config>.lua # Plugin configurations
+  ├── plugin # Automatically sourced at startup
+  │  ├── autocommands.lua
+  │  ├── commands.lua
+  │  ├── keymaps.lua
+  │  ├── plugins.lua # Plugins that require a `setup` call
+  │  └── <plugin-config>.lua # Plugin configurations
+  └── after # Empty in this template
+     ├── plugin # Sourced at the very end of startup (rarely needed)
+     └── ftplugin # Sourced when opening a filetype, after sourcing ftplugin scripts
 ```
 
-> **Important**
+> [!IMPORTANT]
 >
 > - Configuration variables (e.g. `vim.g.<plugin_config>`) should go in `nvim/init.lua`
 >   or a module that is `require`d in `init.lua`.
@@ -158,7 +189,7 @@ Directory structure:
 >   or `nvim/plugin/plugins.lua`.
 > - See [Initialization order](#initialization-order) for details.
 
-### Nix
+### :open_file_folder: Nix
 
 You can declare Neovim derivations in `nix/neovim-overlay.nix`.
 
@@ -174,17 +205,17 @@ Directory structure:
 ── flake.nix
 ── nix
   ├── mkNeovim.nix # Function for creating the Neovim derivation
-  ├── neovim-overlay.nix # Overlay that adds Neovim derivation
-  └── plugin-overlay.nix # Overlay that builds flake input plugins
+  └── neovim-overlay.nix # Overlay that adds Neovim derivation
 ```
 
-### Initialization order
+### :mag: Initialization order
 
 This derivation creates an `init.lua` as follows:
 
 1. Add `nvim/lua` to the `runtimepath`.
 1. Add the content of `nvim/init.lua`.
 1. Add `nvim/*` to the `runtimepath`.
+1. Add `nvim/after` to the `runtimepath`.
 
 This means that modules in `nvim/lua` can be `require`d in `init.lua` and `nvim/*/*.lua`.
 
@@ -192,7 +223,7 @@ Modules in `nvim/plugin/` are sourced automatically, as if they were plugins.
 Because they are added to the runtime path at the end of the resulting `init.lua`,
 Neovim sources them _after_ loading plugins.
 
-## Pre-configured plugins
+## :electric_plug: Pre-configured plugins
 
 This configuration comes with [a few plugins pre-configured](./nix/neovim-overlay.nix).
 
@@ -201,7 +232,25 @@ You can add or remove plugins by
 - Adding/Removing them in the [Nix list](./nix/neovim-overlay.nix).
 - Adding/Removing the config in `nvim/plugin/<plugin>.lua`.
 
-## Alternative / similar projects
+## :anchor: Syncing updates
+
+If you have used this template and would like to fetch updates
+that were added later...
+
+Add this template as a remote:
+
+```console
+git remote add upstream git@github.com:mrcjkb/kickstart-nix.nvim.git
+```
+
+Fetch and merge changes:
+
+```console
+git fetch upstream
+git merge upstream/main --allow-unrelated-histories
+```
+
+## :link: Alternative / similar projects
 
 - [`kickstart.nvim`](https://github.com/nvim-lua/kickstart.nvim):
   Single-file Neovim configuration template with a similar philosophy to this project.
@@ -209,16 +258,22 @@ You can add or remove plugins by
 - [`neovim-flake`](https://github.com/jordanisaacs/neovim-flake):
   Configured using a Nix module DSL.
 - [`NixVim`](https://github.com/nix-community/nixvim):
-  A Neovim distribution configured using a NixOS module.
+  A module system for Neovim, with a focus on plugin configs.
+- [`nixCats-nvim`](https://github.com/BirdeeHub/nixCats-nvim):
+  A project that organises plugins into categories.
+  It also separates lua and nix configuration.
+- [`lazy-nix-helper.nvim`](https://github.com/b-src/lazy-nix-helper.nvim):
+  For lazy.nvim users who would like to manage plugins with Nix,
+  but load them with lazy.nvim.
 
-> **Note**
+> [!NOTE]
 >
 > When comparing with projects in the "non-Nix world", this
 > repository would be more comparable to `kickstart.nvim` (hence the name),
 > while the philosophies of `neovim-flake` and `NixVim` are more in line with
 > a Neovim distribution like [`LunarVim`](https://www.lunarvim.org/)
 > or [`LazyVim`](https://www.lazyvim.org/)
-> (though they are more minimal by default).
+> (though they are far more minimal by default).
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [neovim-shield]: https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white

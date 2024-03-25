@@ -1,3 +1,8 @@
+if vim.g.did_load_completion_plugin then
+  return
+end
+vim.g.did_load_completion_plugin = true
+
 local cmp = require('cmp')
 local lspkind = require('lspkind')
 local luasnip = require('luasnip')
@@ -17,10 +22,6 @@ local function complete_with_source(source)
   elseif type(source) == 'table' then
     cmp.complete { config = { sources = { source } } }
   end
-end
-
-local function complete_with_source_mapping(name, modes)
-  return cmp.mapping.complete { config = { sources = { { name = name } } }, modes }
 end
 
 cmp.setup {
@@ -144,7 +145,6 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' },
     { name = 'cmdline_history' },
     { name = 'path' },
-    { name = 'luasnip' },
   },
 })
 
